@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "RewardSyncHQ — Cashback & AI Reviews",
+  "version": "2.0",
+  "description": "Save money automatically. Get cashback alerts, save to wishlist, and analyze reviews with AI on any shopping site.",
+  "permissions": ["storage", "scripting", "activeTab", "tabs"],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "icons": {
+    "128": "icon128.jpg"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["config.js", "content.js"],
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "RewardSyncHQ",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon128.jpg"
+    }
+  }
+}
