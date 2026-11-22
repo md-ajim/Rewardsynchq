@@ -1,0 +1,29 @@
+{
+    "production": {
+        "aws_region": "us-east-1",
+        "django_settings": "settings.settings",
+        "project_name": "rewardsynchq",
+        "runtime": "python3.12", 
+        "s3_bucket": "rewardsynchq-storage",
+        "profile_name": "default",
+        "manage_roles": false,
+        "role_name": "zapa-dev-ZappaLambdaExecutionRole",
+        "timeout_seconds": 300,
+        "cors": true,
+        "slim_handler": true,
+        "use_precompiled_packages": false,
+        "exclude": [
+            "boto3",
+            "dateutil",
+            "botocore",
+            "s3transfer",
+            "concurrent",
+            "db.sqlite3",
+            "venv",
+            ".env",
+            ".git",
+            "__pycache__",
+            "*.zip"
+        ]
+    }
+}
