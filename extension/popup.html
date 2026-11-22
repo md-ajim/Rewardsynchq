@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>RewardSyncHQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Tokens ────────────────────────────────────────────── */
+    :root {
+      --bg:         #090e1c;
+      --surface:    #111827;
+      --surface-2:  #1a2236;
+      --border:     rgba(255,255,255,0.07);
+      --border-hi:  rgba(255,255,255,0.12);
+      --indigo:     #6366f1;
+      --violet:     #8b5cf6;
+      --green:      #22c55e;
+      --green-2:    #16a34a;
+      --rose:       #f43f5e;
+      --amber:      #f59e0b;
+      --cyan:       #06b6d4;
+      --text:       #f8fafc;
+      --text-2:     #94a3b8;
+      --text-3:     #475569;
+      --radius-sm:  10px;
+      --radius-md:  16px;
+      --radius-lg:  22px;
+      --radius-xl:  28px;
+    }
+
+    /* ── Base ──────────────────────────────────────────────── */
+    html, body {
+      width: 360px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow: hidden;
+      /* Chrome clips popup at 600px height */
+    }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+    /* ── Keyframes ─────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1);    }
+    }
+    @keyframes shimmer {
+      from { background-position: -360px 0; }
+      to   { background-position:  360px 0; }
+    }
+    @keyframes pulseGreen {
+      0%,100% { box-shadow: 0 0 0 0   rgba(34,197,94,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(34,197,94,0);   }
+    }
+    @keyframes glowIndigo {
+      0%,100% { box-shadow: 0 0 20px rgba(99,102,241,0.25); }
+      50%      { box-shadow: 0 0 32px rgba(99,102,241,0.5);  }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0);   }
+    }
+    @keyframes skeletonPulse {
+      0%,100% { opacity: 0.5; }
+      50%      { opacity: 1;   }
+    }
+    @keyframes spinDot {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Staggered entrance ────────────────────────────────── */
+    .a1 { animation: fadeUp .35s .00s both; }
+    .a2 { animation: fadeUp .35s .06s both; }
+    .a3 { animation: fadeUp .35s .12s both; }
+    .a4 { animation: fadeUp .35s .18s both; }
+    .a5 { animation: fadeUp .35s .24s both; }
+
+    /* ══════════════════════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════════════════════ */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .brand-gem {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      animation: glowIndigo 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      background: linear-gradient(90deg, #f8fafc 40%, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .live-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.2px;
+    }
+    .live-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulseGreen 2s ease-in-out infinite;
+    }
+    .settings-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-size: 14px;
+      transition: all .18s;
+    }
+    .settings-btn:hover {
+      background: var(--surface-2);
+      color: var(--text-2);
+      border-color: var(--border-hi);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       HERO CARD
+    ══════════════════════════════════════════════════════════ */
+    .hero-wrap {
+      padding: 0 14px;
+    }
+
+    /* ── Active: cashback found ── */
+    .hero-card {
+      border-radius: var(--radius-xl);
+      padding: 22px 22px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+    .hero-card:hover { transform: translateY(-1px); }
+
+    .hero-active {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,197,94,0.22) 0%, transparent 70%),
+        linear-gradient(160deg, #0d2318 0%, #0a1a0f 100%);
+      border: 1px solid rgba(34,197,94,0.22);
+    }
+    .hero-active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-idle {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    /* Rate display */
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero-active .hero-eyebrow { color: rgba(134,239,172,0.7); }
+    .hero-idle   .hero-eyebrow { color: var(--text-3); }
+
+    .hero-rate-block {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .hero-rate {
+      font-size: 60px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+    .hero-active .hero-rate {
+      background: linear-gradient(135deg, #86efac, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-idle .hero-rate {
+      font-size: 28px;
+      letter-spacing: -1px;
+      color: var(--text-3);
+    }
+    .hero-rate-suffix {
+      font-size: 22px;
+      font-weight: 800;
+      color: rgba(134,239,172,0.8);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .hero-idle .hero-rate-suffix { display: none; }
+
+    .hero-store {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: rgba(134,239,172,0.6);
+      margin-bottom: 16px;
+    }
+    .hero-idle .hero-store { color: var(--text-3); margin-bottom: 12px; }
+
+    /* Activate button */
+    .activate-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #22c55e, #16a34a, #22c55e);
+      background-size: 200% auto;
+      animation: shimmer 2.5s linear infinite;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+      transition: all .22s cubic-bezier(.34,1.56,.64,1);
+    }
+    .activate-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(34,197,94,0.45);
+    }
+    .activate-btn:active { transform: scale(.97); }
+    .activate-btn-badge {
+      background: rgba(0,0,0,0.2);
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Idle CTA */
+    .idle-cta {
+      width: 100%;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--indigo);
+      background: rgba(99,102,241,0.08);
+      border: 1px solid rgba(99,102,241,0.18);
+      transition: all .18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .idle-cta:hover {
+      background: rgba(99,102,241,0.15);
+      border-color: rgba(99,102,241,0.35);
+    }
+
+    /* Idle sub-text */
+    .idle-sub {
+      font-size: 11.5px;
+      color: var(--text-3);
+      text-align: center;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* Skeleton */
+    .skel-line {
+      border-radius: 8px;
+      background: var(--surface-2);
+      animation: skeletonPulse 1.4s ease-in-out infinite;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       ACTION PILLS ROW
+    ══════════════════════════════════════════════════════════ */
+    .actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 18px 14px 4px;
+    }
+    .action-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      flex: 1;
+    }
+    .action-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      transition: all .22s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+    }
+    .action-btn:hover {
+      transform: translateY(-3px) scale(1.06);
+      border-color: var(--border-hi);
+    }
+    .action-btn:active { transform: scale(.93); }
+
+    /* Per-button color theming */
+    .action-btn.wishlist:hover  { background: rgba(244,63,94,0.12);  border-color: rgba(244,63,94,0.3);  box-shadow: 0 6px 20px rgba(244,63,94,0.2);  }
+    .action-btn.ai:hover        { background: rgba(139,92,246,0.12); border-color: rgba(139,92,246,0.3); box-shadow: 0 6px 20px rgba(139,92,246,0.2); }
+    .action-btn.deals:hover     { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); box-shadow: 0 6px 20px rgba(245,158,11,0.2); }
+    .action-btn.explore:hover   { background: rgba(6,182,212,0.12);  border-color: rgba(6,182,212,0.3);  box-shadow: 0 6px 20px rgba(6,182,212,0.2);  }
+
+    .action-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+    }
+    .action-item:hover .action-label { color: var(--text-2); }
+
+    /* ══════════════════════════════════════════════════════════
+       DIVIDER
+    ══════════════════════════════════════════════════════════ */
+    .divider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 14px 10px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .divider-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       STATS ROW
+    ══════════════════════════════════════════════════════════ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      padding: 0 14px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 8px;
+      text-align: center;
+      transition: border-color .18s, background .18s;
+    }
+    .stat-box:hover {
+      background: var(--surface-2);
+      border-color: var(--border-hi);
+    }
+    .stat-num {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #f8fafc, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: countUp .5s both;
+    }
+    .stat-lbl {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text-3);
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════════ */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-ver {
+      font-size: 10.5px;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+    .footer-links {
+      display: flex;
+      gap: 14px;
+    }
+    .footer-link {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: color .15s;
+    }
+    .footer-link:hover { color: var(--indigo); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ HEADER ═══════ -->
+  <header class="header a1">
+    <div class="brand">
+      <div class="brand-gem">💎</div>
+      <span class="brand-name">RewardSyncHQ</span>
+    </div>
+    <div class="header-right">
+      <div class="live-pill">
+        <div class="live-dot"></div>
+        Active
+      </div>
+      <button class="settings-btn" id="btn-settings" title="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- ═══════ HERO CARD ═══════ -->
+  <div class="hero-wrap a2" id="hero-wrap">
+    <!-- skeleton shown until popup.js renders real state -->
+    <div class="hero-card hero-idle">
+      <div class="hero-eyebrow">Checking page…</div>
+      <div class="skel-line" style="height:52px;width:140px;margin-bottom:10px;border-radius:14px;"></div>
+      <div class="skel-line" style="height:13px;width:100px;margin-bottom:16px;"></div>
+      <div class="skel-line" style="height:42px;width:100%;border-radius:12px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════ ACTION PILLS ═══════ -->
+  <div class="actions-row a3">
+
+    <div class="action-item">
+      <button class="action-btn wishlist" id="btn-wishlist" title="Save to Wishlist">❤️</button>
+      <span class="action-label">Wishlist</span>
+    </div>
+
+    <div class="action-item">
+      <button class="action-btn ai" id="btn-ai" title="AI Review Summary">✨</button>
+      <span class="action-label">AI Reviews</span>
+    </div>
+
+    <div class="action-item">
+      <a class="action-btn deals" id="btn-deals" title="Hot Deals">🏷️</a>
+      <span class="action-label">Hot Deals</span>
+    </div>
+
+    <div class="action-item">
+      <a class="action-btn explore" id="btn-explore" title="Browse All Brands">🌐</a>
+      <span class="action-label">Explore</span>
+    </div>
+
+  </div>
+
+  <!-- ═══════ STATS ═══════ -->
+  <div class="divider-row a4">
+    <div class="divider-line"></div>
+    <span class="divider-label">Your Stats</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="stats-row a4">
+    <div class="stat-box">
+      <div class="stat-num" id="stat-stores">—</div>
+      <div class="stat-lbl">Stores</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-saved">$0</div>
+      <div class="stat-lbl">Saved</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-wishlist">0</div>
+      <div class="stat-lbl">Wishlist</div>
+    </div>
+  </div>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="footer a5">
+    <span class="footer-ver">RewardSyncHQ v2.0</span>
+    <div class="footer-links">
+      <span class="footer-link" id="link-dashboard">Dashboard</span>
+      <span class="footer-link" id="link-settings-footer">Settings</span>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
