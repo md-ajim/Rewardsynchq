@@ -1,5 +1,9 @@
 # RewardSyncHQ / DealVerse — Verified Architecture
 
+> **Live Product:** [rewardsynchq.com](https://rewardsynchq.com)  
+> **Source Code:** [github.com/md-ajim/DealVerse](https://github.com/md-ajim/DealVerse) *(private repository — read access available on request)*  
+> **Engineering Lead:** MD Ajim (Full-Stack Engineer & System Architect)
+
 This document describes the architecture that is actually implemented in this repository. It is intentionally narrower than a design proposal: components that do not exist in code are not shown. File references point to the implementation.
 
 ## 1. Runtime topology

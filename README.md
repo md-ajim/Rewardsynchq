@@ -1,9 +1,20 @@
 <div align="center">
 
-<picture>
-DealVerse (RewardSyncHQ) — Cashback, Deals & AI Shopping Platform
+<h1>DealVerse (RewardSyncHQ) — Cashback, Deals & AI Shopping Platform</h1>
 
-**A Django REST + Next.js cashback platform with first-party click attribution, affiliate postback ingestion, a user wallet ledger, and a Manifest V3 Chrome extension.**
+**A production-ready Django REST + Next.js affiliate cashback platform featuring first-party click attribution, webhook postback ingestion, idempotent wallet ledgers, and a Manifest V3 Chrome extension.**
+
+<p>
+  <a href="https://rewardsynchq.com" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Product-rewardsynchq.com-2ea44f?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Product" />
+  </a>
+  <a href="https://github.com/md-ajim/DealVerse" target="_blank">
+    <img src="https://img.shields.io/badge/Source-md--ajim%2FDealVerse-181717?style=for-the-badge&logo=github&logoColor=white" alt="Source Code" />
+  </a>
+  <a href="https://github.com/md-ajim/DealVerse" target="_blank">
+    <img src="https://img.shields.io/badge/Access-Private_(Read_Access_on_Request)-blueviolet?style=for-the-badge" alt="Repository Access" />
+  </a>
+</p>
 
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.0.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.2.0-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
