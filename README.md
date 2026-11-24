@@ -4,10 +4,6 @@
 
 **A production-ready Django REST + Next.js affiliate cashback platform featuring first-party click attribution, webhook postback ingestion, idempotent wallet ledgers, and a Manifest V3 Chrome extension.**
 
-> **Live Product:** [rewardsynchq.com](https://rewardsynchq.com)  
-> **Source Code:** [github.com/md-ajim/DealVerse](https://github.com/md-ajim/DealVerse) *(private repository — read access available on request)*  
-> **Engineering Lead:** MD Ajim (Full-Stack Engineer & System Architect)
-
 <p>
   <a href="https://rewardsynchq.com" target="_blank">
     <img src="https://img.shields.io/badge/Live_Product-rewardsynchq.com-2ea44f?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Product" />
@@ -47,6 +43,9 @@
 </div>
 
 ---
+> **Live Product:** [rewardsynchq.com](https://rewardsynchq.com)  
+> **Source Code:** [github.com/md-ajim/DealVerse](https://github.com/md-ajim/DealVerse) *(private repository — read access available on request)*  
+> **Engineering Lead:** MD Ajim (Full-Stack Engineer & System Architect)
 
 > **Documentation rule for this repository:** every technical claim below is traceable to source. If the code does not do it, it is listed under [Known Gaps](#-known-gaps) instead of being presented as a feature. The numbers in [Verified Scope](#-verified-scope) were measured with the commands in [Verification](#-verification).
 
