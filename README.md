@@ -4,6 +4,10 @@
 
 **A production-ready Django REST + Next.js affiliate cashback platform featuring first-party click attribution, webhook postback ingestion, idempotent wallet ledgers, and a Manifest V3 Chrome extension.**
 
+> **Live Product:** [rewardsynchq.com](https://rewardsynchq.com)  
+> **Source Code:** [github.com/md-ajim/DealVerse](https://github.com/md-ajim/DealVerse) *(private repository — read access available on request)*  
+> **Engineering Lead:** MD Ajim (Full-Stack Engineer & System Architect)
+
 <p>
   <a href="https://rewardsynchq.com" target="_blank">
     <img src="https://img.shields.io/badge/Live_Product-rewardsynchq.com-2ea44f?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Product" />
